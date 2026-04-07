@@ -1,3 +1,4 @@
+
 -- Create customers table
 CREATE TABLE customers (
     id INT,
@@ -35,3 +36,33 @@ GROUP BY city;
 -- Order by age descending
 SELECT * FROM customers
 ORDER BY age DESC;
+
+
+
+-- Create orders table
+CREATE TABLE orders (
+    order_id INT,
+    customer_id INT,
+    amount DECIMAL(10,2)
+);
+
+-- Insert sample orders
+INSERT INTO orders (order_id, customer_id, amount) VALUES
+(101, 1, 250.00),
+(102, 2, 300.00),
+(103, 1, 150.00),
+(104, 3, 400.00);
+
+-- JOIN customers with orders
+SELECT customers.name, orders.amount
+FROM customers
+JOIN orders
+ON customers.id = orders.customer_id;
+
+-- Total spending per customer
+SELECT customers.name, SUM(orders.amount) AS total_spent
+FROM customers
+JOIN orders
+ON customers.id = orders.customer_id
+GROUP BY customers.name;
+
